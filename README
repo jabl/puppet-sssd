@@ -1,0 +1,19 @@
+sssd
+
+This is the sssd module, for setting up sssd to connect to Active
+Directory. It should work on Ubuntu 12.04+ and RHEL 6+.
+
+License
+-------
+
+Apache License, Version 2.0
+
+Contact
+-------
+
+janne.blomqvist@aalto.fi
+
+Support
+-------
+
+Please log tickets and issues at https://github.com/jabl/puppet-sssd

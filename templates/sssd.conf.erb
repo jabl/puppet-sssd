@@ -1,0 +1,48 @@
+# sssd.conf managed by puppet
+[sssd]
+config_file_version = 2
+<% if @debug_level -%>
+debug_level = <%= debug_level %>
+<% end -%>
+services = nss, pam
+domains = <%= @ad_domains.keys.flatten.join(',') %>
+
+[nss]
+filter_groups = root
+filter_users = root
+
+[pam]
+
+<% ad_domains.each_pair do |ad_domain, val| -%>
+[domain/<%= ad_domain %>]
+description = LDAP domain with AD server
+cache_credentials = true
+<% if val.has_key?('enumerate') -%>
+# Might cause excessive load on AD servers, keep an eye on this
+enumerate = <%= val['enumerate'] %>
+<% end -%>
+id_provider = ldap
+auth_provider = krb5
+chpass_provider = krb5
+access_provider = ldap
+krb5_realm = <%= ad_domain %>
+krb5_server = <%= val['krb5_servers'].flatten.join(',') %>
+krb5_kpasswd = <%= val['krb5_kpasswd'] %>
+krb5_renew_interval = 3600
+########## BUG WORKAROUND ################
+krb5_canonicalize = false
+##########################################
+ldap_sasl_mech = GSSAPI
+ldap_search_base = <%= val['ldap_search_base'] %>
+ldap_user_object_class = user
+ldap_user_home_directory = unixHomeDirectory
+ldap_user_principal = userPrincipalName
+ldap_group_object_class = group
+ldap_schema = rfc2307bis
+ldap_uri = <%= val['ldap_uris'].flatten.join(',') %>
+ldap_force_upper_case_realm = true
+ldap_referrals = false
+ldap_sasl_canonicalize = true
+ldap_access_order = expire
+ldap_account_expire_policy = ad
+<% end -%>
