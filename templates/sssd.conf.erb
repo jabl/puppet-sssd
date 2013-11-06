@@ -8,14 +8,23 @@ services = nss, pam
 domains = <%= @ad_domains.keys.flatten.join(',') %>
 
 [nss]
+<% if @debug_level -%>
+debug_level = <%= debug_level %>
+<% end -%>
 filter_groups = root
 filter_users = root
 
 [pam]
+<% if @debug_level -%>
+debug_level = <%= debug_level %>
+<% end -%>
 
 <% ad_domains.each_pair do |ad_domain, val| -%>
 [domain/<%= ad_domain %>]
 description = LDAP domain with AD server
+<% if @debug_level -%>
+debug_level = <%= debug_level %>
+<% end -%>
 cache_credentials = true
 <% if val.has_key?('enumerate') -%>
 # Might cause excessive load on AD servers, keep an eye on this
@@ -35,6 +44,7 @@ krb5_canonicalize = false
 ldap_sasl_mech = GSSAPI
 ldap_search_base = <%= val['ldap_search_base'] %>
 ldap_user_object_class = user
+ldap_user_name = sAMAccountName
 ldap_user_home_directory = unixHomeDirectory
 ldap_user_principal = userPrincipalName
 ldap_group_object_class = group
