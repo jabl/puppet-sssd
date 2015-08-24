@@ -28,6 +28,8 @@ debug_level = <%= debug_level %>
 <% if val.has_key?('cache_credentials') -%>
 cache_credentials = <%= val['cache_credentials'] %>
 <% end -%>
+# AD is case insensitive
+case_sensitive = false
 <% if val.has_key?('enumerate') -%>
 # Might cause excessive load on AD servers, keep an eye on this
 enumerate = <%= val['enumerate'] %>
