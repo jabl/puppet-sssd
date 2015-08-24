@@ -25,7 +25,9 @@ description = LDAP domain with AD server
 <% if @debug_level -%>
 debug_level = <%= debug_level %>
 <% end -%>
-cache_credentials = true
+<% if val.has_key?('cache_credentials') -%>
+cache_credentials = <%= val['cache_credentials'] %>
+<% end -%>
 <% if val.has_key?('enumerate') -%>
 # Might cause excessive load on AD servers, keep an eye on this
 enumerate = <%= val['enumerate'] %>
