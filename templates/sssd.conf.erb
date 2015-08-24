@@ -2,28 +2,28 @@
 [sssd]
 config_file_version = 2
 <% if @debug_level -%>
-debug_level = <%= debug_level %>
+debug_level = <%= @debug_level %>
 <% end -%>
 services = nss, pam
 domains = <%= @ad_domains.keys.flatten.join(',') %>
 
 [nss]
 <% if @debug_level -%>
-debug_level = <%= debug_level %>
+debug_level = <%= @debug_level %>
 <% end -%>
 filter_groups = root
 filter_users = root
 
 [pam]
 <% if @debug_level -%>
-debug_level = <%= debug_level %>
+debug_level = <%= @debug_level %>
 <% end -%>
 
 <% ad_domains.each_pair do |ad_domain, val| -%>
 [domain/<%= ad_domain %>]
 description = LDAP domain with AD server
 <% if @debug_level -%>
-debug_level = <%= debug_level %>
+debug_level = <%= @debug_level %>
 <% end -%>
 <% if val.has_key?('cache_credentials') -%>
 cache_credentials = <%= val['cache_credentials'] %>
