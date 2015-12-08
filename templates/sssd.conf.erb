@@ -65,7 +65,7 @@ ldap_search_base = <%= val['ldap_search_base'] %>
 <% if val.has_key?('ldap_user_search_base') -%>
 ldap_user_search_base = <%= val['ldap_user_search_base'] %>
 <% end -%>
-< if val.has_key?('ldap_user_search_scope') -%>
+<% if val.has_key?('ldap_user_search_scope') -%>
 ldap_user_search_scope = <%= val['ldap_user_search_scope'] %>
 <% end -%>
 ldap_user_object_class = user
