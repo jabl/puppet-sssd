@@ -49,6 +49,7 @@ class sssd (
   $service_manage    = $sssd::params::service_manage,
   $service_name      = $sssd::params::service_name,
   $debug_level       = undef,
+  $override_homedir  = undef,
   $ad_domains,
   ) inherits sssd::params {
 
@@ -61,8 +62,8 @@ class sssd (
     # http://docs.puppetlabs.com/puppet/2.7/reference/lang_containment.html#known-issues
     anchor { 'sssd::begin': }
     anchor { 'sssd::end': }
-    
+
     Anchor['sssd::begin'] -> Class['::sssd::install'] -> Class['::sssd::config']
     ~> Class['::sssd::service'] -> Anchor['sssd::end']
-    
+
 }
