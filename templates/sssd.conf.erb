@@ -59,7 +59,7 @@ krb5_use_enterprise_principal = true
 krb5_canonicalize = false
 ##########################################
 ldap_sasl_mech = GSSAPI
-<% if val.has_key?('ldap_search_base') %>
+<% if val.has_key?('ldap_search_base') -%>
 ldap_search_base = <%= val['ldap_search_base'] %>
 <% end -%>
 <% if val.has_key?('ldap_user_search_base') -%>
