@@ -13,6 +13,9 @@ debug_level = <%= @debug_level %>
 <% end -%>
 filter_groups = root
 filter_users = root
+<% if @override_homedir -%>
+override_homedir = <%= @override_homedir %>
+<% end -%>
 
 [pam]
 <% if @debug_level -%>
@@ -34,29 +37,58 @@ case_sensitive = false
 # Might cause excessive load on AD servers, keep an eye on this
 enumerate = <%= val['enumerate'] %>
 <% end -%>
+<% if val.has_key?('min_id') -%>
+min_id = <%= val['min_id'] %>
+<% end -%>
 id_provider = ldap
 auth_provider = krb5
 chpass_provider = krb5
 access_provider = ldap
 krb5_realm = <%= ad_domain %>
+<% if val.has_key?('krb5_servers') -%>
 krb5_server = <%= val['krb5_servers'].flatten.join(',') %>
+<% end -%>
+<% if val.has_key?('krb5_kpasswd') -%>
 krb5_kpasswd = <%= val['krb5_kpasswd'] %>
-krb5_renew_interval = 3600
+<% end -%>
+krb5_validate = true
+krb5_renew_interval = 6000
+krb5_renewable_lifetime = 36000
+krb5_use_enterprise_principal = true
 ########## BUG WORKAROUND ################
 krb5_canonicalize = false
 ##########################################
 ldap_sasl_mech = GSSAPI
+<% if val.has_key?('ldap_search_base') %>
 ldap_search_base = <%= val['ldap_search_base'] %>
+<% end -%>
+<% if val.has_key?('ldap_user_search_base') -%>
+ldap_user_search_base = <%= val['ldap_user_search_base'] %>
+<% end -%>
+< if val.has_key?('ldap_user_search_scope') -%>
+ldap_user_search_scope = <%= val['ldap_user_search_scope'] %>
+<% end -%>
 ldap_user_object_class = user
 ldap_user_name = sAMAccountName
 ldap_user_home_directory = unixHomeDirectory
-ldap_user_principal = userPrincipalName
+# https://fedorahosted.org/sssd/ticket/1749
+ldap_user_principal = sAMAccountName
 ldap_group_object_class = group
+<% if val.has_key?('ldap_group_name') -%>
+ldap_group_name = <% val['ldap_group_name'] %>
+<% end -%>
+<% if val.has_key?('ldap_schema') -%>
+ldap_schema = <%= val['ldap_schema'] %>
+<% else -%>
 ldap_schema = rfc2307bis
+<% end -%>
+<% if val.has_key?('ldap_uris') -%>
 ldap_uri = <%= val['ldap_uris'].flatten.join(',') %>
+<% end -%>
 ldap_force_upper_case_realm = true
 ldap_referrals = false
 ldap_sasl_canonicalize = true
 ldap_access_order = expire
 ldap_account_expire_policy = ad
+ldap_pwd_policy = mit_kerberos
 <% end -%>
