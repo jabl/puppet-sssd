@@ -75,7 +75,7 @@ ldap_user_home_directory = unixHomeDirectory
 ldap_user_principal = sAMAccountName
 ldap_group_object_class = group
 <% if val.has_key?('ldap_group_name') -%>
-ldap_group_name = <% val['ldap_group_name'] %>
+ldap_group_name = <%= val['ldap_group_name'] %>
 <% end -%>
 <% if val.has_key?('ldap_schema') -%>
 ldap_schema = <%= val['ldap_schema'] %>
