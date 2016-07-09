@@ -22,7 +22,7 @@ override_homedir = <%= @override_homedir %>
 debug_level = <%= @debug_level %>
 <% end -%>
 
-<% ad_domains.each_pair do |ad_domain, val| -%>
+<% @ad_domains.each_pair do |ad_domain, val| -%>
 [domain/<%= ad_domain %>]
 description = LDAP domain with AD server
 <% if @debug_level -%>
