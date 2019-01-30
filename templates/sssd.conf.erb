@@ -91,4 +91,7 @@ ldap_sasl_canonicalize = true
 ldap_access_order = expire
 ldap_account_expire_policy = ad
 ldap_pwd_policy = mit_kerberos
+<% if val.has_key?('auto_private_groups') -%>
+auto_private_groups = <%= val['auto_private_groups'] %>
+<% end -%>
 <% end -%>

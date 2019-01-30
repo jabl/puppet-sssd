@@ -1,5 +1,5 @@
 name    'jabl/sssd'
-version '0.1.0'
+version '0.1.1'
 source 'UNKNOWN'
 author 'Janne Blomqvist'
 license 'Apache License, Version 2.0'
